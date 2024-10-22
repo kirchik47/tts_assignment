@@ -20,12 +20,13 @@ for loc in bs.findAll('loc'):
         links.append(loc_text)
 
 i = 0
+links = links[33:]
 for link in links:
     response = requests.get(link, headers=headers)
     bs = BeautifulSoup(response.content, 'html.parser')
     # Find <a> tag with href to post
-    auido_tag = bs.find('a', class_='powerpress_link_d')
-    if auido_tag:
+    audio_tag = bs.find('a', class_='powerpress_link_d')
+    if audio_tag:
         transcript_div = bs.find('div', class_='post__content')
         a_tags = transcript_div.findAll('a')
         transcript_url = None
@@ -37,17 +38,19 @@ for link in links:
                 break
         if transcript_url and transcript_url.endswith('.txt'):
             i += 1
-            audio_url = auido_tag['href']
-            audio = requests.get(audio_url, headers=headers).content
-            with open(f'data/audios/{i}.mp3', 'wb') as f:
-                f.write(audio)
-
             # Handle possible unicode and other issues with the transcript
             try:
                 transcript = requests.get(transcript_url, headers=headers).content.decode()
-                with open(f'data/transcripts/{i}.txt', 'w') as f:
+                if i < 32:
+                    continue
+                with open(f'data/audios/{i - 32}.txt', 'w') as f:
                     f.write(transcript)
+                audio_url = audio_tag['href']
+                audio = requests.get(audio_url, headers=headers).content
+                with open(f'data/audios/{i - 32}.mp3', 'wb') as f:
+                    f.write(audio)
             except Exception as e:
                 print(e)
                 i -= 1
+
         print(i)
