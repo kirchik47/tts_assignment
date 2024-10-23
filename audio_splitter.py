@@ -17,7 +17,7 @@ def get_timestamps(transcript):
     return timestamps_ms
 
 def split_transcripts(transcript):
-    cleaned_transcript = re.sub(speaker_pattern, "", transcript).replace('\n\n', '')
+    cleaned_transcript = re.sub(speaker_pattern, "", transcript).replace('\n\n', '').replace('\n', ' ')
     cleaned_transcript = re.sub(end_intro_pattern, "", cleaned_transcript)
     splitted_transcript = re.split(time_pattern, cleaned_transcript)
     splitted_transcript =  [s.strip().strip('"') for s in splitted_transcript 
