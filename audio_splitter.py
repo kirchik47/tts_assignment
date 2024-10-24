@@ -32,8 +32,8 @@ transcripts = []
 for i, file in enumerate(os.listdir(file_path)):
     filename = os.path.join(file_path, file)
     if file.endswith(".mp3"):
-        # audio = AudioSegment.from_file(filename)
-        pass
+        audio = AudioSegment.from_file(filename)
+        # pass
     else:
         with open(filename, 'r') as f:
             try:
@@ -44,17 +44,17 @@ for i, file in enumerate(os.listdir(file_path)):
             timestamps_ms = get_timestamps(transcript)
             splitted_transcript = split_transcripts(transcript)
             for j, stamp in enumerate(timestamps_ms):
-                # start_time = stamp
-                # if j < len(timestamps_ms) - 1:
-                #     end_time = timestamps_ms[j + 1]
-                #     segment = audio[start_time:end_time]
-                # else:
-                #     segment = audio[start_time:]
-                # segment.export(f"data/segments/segment_{segment_idx}.mp3", format='mp3')
+                start_time = stamp
+                if j < len(timestamps_ms) - 1:
+                    end_time = timestamps_ms[j + 1]
+                    segment = audio[start_time:end_time]
+                else:
+                    segment = audio[start_time:]
+                segment.export(f"data/task1/wavs/segment_{segment_idx}.wav", format='wav')
                 segments.append(f'segment_{segment_idx}')
                 transcripts.append(splitted_transcript[j])
                 segment_idx += 1
     print(i)
 metadata = pd.DataFrame({0: segments, 1: transcripts})
-metadata.to_csv('data/metadata.csv', sep='|', index=False)
+# metadata.to_csv('data/metadata.csv', sep='|', index=False)
     

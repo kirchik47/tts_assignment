@@ -1,0 +1,15 @@
+Quantization
+I've used dynamic quantization in my code, which is a simple and efficient method for quantizing the weights and 
+activations of a neural network. However, there are other methods available, such as: 
+
+Static Quantization: This method involves quantizing the weights and activations of the network before training.
+
+Post-Training Quantization: This method involves quantizing the weights and activations of the network
+after training, which can be done using techniques such as knowledge distillation or quantization-aware training. 
+So, it basically needs additional training to adjust the quantized model to match the original model's performance.
+
+And because of poor performance of the post-training quantization, I've chosen dynamic quantization, which
+reduced the model size by 4x and the inference time by 1.5x on CPU and 2.8x on GPU in kaggle notebook, 
+while maintaining a PESQ score of 2.43 compared to the 2.5 before quantization. 
+For the Polish trained model results are pretty much the same, but PESQ reduced to 3.1 from 3.43,
+which is still a good result.

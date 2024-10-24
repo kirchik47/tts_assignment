@@ -1,0 +1,26 @@
+Report on Fine-tuning TTS for Polish Language
+
+1. Model Selection
+Base Model: Coqui TTS Vits model.
+Reason for Selection: The Vits model is flexible, has high-quality multi-speaker synthesis, 
+and can generate natural-sounding speech. The only problem is that it doesn't have a Polish phonemes converter, so I needed
+to do the phoneme creation using phonemizer lib.
+
+2. Dataset Collection
+Dataset Used: Transcriptions from the CommonVoice audios.
+Reason for Selection: These audios contain sentences on various topics, and is one of not many rich datasets with Polish language.
+
+3. Fine-tuning Process
+Hyperparameters:
+Learning Rate: 0.0005.
+Batch Size: 8.
+
+4. Benchmarks
+Losses for discriminator and generator being low, the model's performance on Polish text is pretty decent. I've asked several 
+native speakers to evaluate the model's quality, and they've said it's good enough for a first
+attempt. However, there are some issues with the model's ability to generate speech with a natural rhythm
+and intonation. This is likely due to the limited size of the dataset and the model's architecture.
+PESQ is 3.43, which is a good score for a first attempt.
+
+It performs a lot better than base model, which has PESQ of 2.9.
+
